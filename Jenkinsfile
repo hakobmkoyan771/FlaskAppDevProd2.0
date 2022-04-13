@@ -7,9 +7,7 @@ pipeline {
     stage("Build application image") {
       steps {
         script {
-          sh "echo ${DOCKERHUB_CREDENTIALS_PSW} | docker login -u ${DOCKERHUB_CREDENTIALS_USR} --password-stdin"
-          //sh "cd ./app/; docker build -t ${DOCKERHUB_CREDENTIALS_USR}/flaskapp ."
-          step([$class: 'DockerBuilderPublisher', cleanImages: false, cleanupWithJenkinsJobDelete: false, cloud: '', dockerFileDirectory: 'app/', fromRegistry: [credentialsId: 'docker-repo', url: 'https://hub.docker.com/u/hakobmkoyan771'], pull: true, pushCredentialsId: 'docker-repo', pushOnSuccess: true, tagsString: 'hakobmkoyan771/FlaskApp'])
+          sh "cd ./app/; docker build -t ${DOCKERHUB_CREDENTIALS_USR}/flaskapp ."
         }
       }
     }
@@ -66,7 +64,8 @@ pipeline {
       }
       steps {
         sh "docker pull ${DOCKERHUB_CREDENTIALS_USR}/flaskapp:latest"
-        sh "docker run -d  -e DEBUG=False --name prod-app -p 5050:5050 ${DOCKERHUB_CREDENTIALS_USR}/flaskapp:latest"
+        //sh "docker run -d  -e DEBUG=False --name prod-app -p 5050:5050 ${DOCKERHUB_CREDENTIALS_USR}/flaskapp:latest"
+        step([$class: 'DockerBuilderControl', option: <object of type com.nirima.jenkins.plugins.docker.builder.DockerBuilderControlOptionRun>])
         sh 'sleep 300'
         sh "docker container rm -f prod-app"
       }
