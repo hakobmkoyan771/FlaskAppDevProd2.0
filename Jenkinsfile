@@ -55,7 +55,7 @@ pipeline {
       }
       steps {
         sh "docker pull ${DOCKERHUB_CREDENTIALS_USR}/flaskapp:latest"
-        sh "docker run -d ${DOCKERHUB_CREDENTIALS_USR}/flaskapp:latest -e DEBUG=True --name dev-app"
+        sh "docker run -d -e DEBUG=True --name dev-app ${DOCKERHUB_CREDENTIALS_USR}/flaskapp:latest"
       }
     }
     stage("Running application on prod") {
@@ -66,7 +66,7 @@ pipeline {
       }
       steps {
         sh "docker pull ${DOCKERHUB_CREDENTIALS_USR}/flaskapp:latest"
-        sh "docker run -d ${DOCKERHUB_CREDENTIALS_USR}/flaskapp:latest -e DEBUG=False --name prod-app"
+        sh "docker run -d  -e DEBUG=False --name prod-app ${DOCKERHUB_CREDENTIALS_USR}/flaskapp:latest"
       }
     }
   }
