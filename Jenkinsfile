@@ -9,9 +9,6 @@ pipeline {
   }
   stages {
     stage("Build application image") {
-      agent {
-        label 'Master' 
-      }
       steps {
         script {
           sh "cd ./app/; docker build -t ${DOCKERHUB_CREDENTIALS_USR}/flaskapp ."
@@ -19,22 +16,16 @@ pipeline {
       }
     }
     stage("Deploy application image") {
-      agent {
-        label 'Master' 
-      }
       steps {
           sh "echo ${DOCKERHUB_CREDENTIALS_PSW} | docker login -u ${DOCKERHUB_CREDENTIALS_USR} --password-stdin"
           sh "docker image push ${DOCKERHUB_CREDENTIALS_USR}/flaskapp:latest"
       } 
     }
     stage("Request Git Release API") {
-      agent {
-        label 'Master'
-      }
       steps {
         script {
           try {
-            RELEASE = sh returnStdout: true, script: '''rel=$(curl https://api.github.com/repos/hakobmkoyan771/TestRepo/releases | grep 'prerelease' | awk '{print $2}' | awk 'FNR == 1 {print}'); echo $rel'''
+            RELEASE = sh returnStdout: true, script: '''rel=$(curl https://api.github.com/repos/hakobmkoyan771/FlaskAppDevProd2.0/releases | grep 'prerelease' | awk '{print $2}' | awk 'FNR == 1 {print}'); echo $rel'''
           }
           catch(Exception e) {
             error("Invalid address") 
@@ -62,14 +53,9 @@ pipeline {
           DEBUG == "true" 
         }
       }
-      agent {
-        label 'Slave-1' 
-      }
       steps {
-        sh "echo ${DOCKERHUB_CREDENTIALS_PSW} | docker login -u ${DOCKERHUB_CREDENTIALS_USR} --password-stdin"
         sh "docker pull ${DOCKERHUB_CREDENTIALS_USR}/flaskapp:latest"
-        sh "docker run -d ${DOCKERHUB_CREDENTIALS_USR}/flaskapp:latest --name dev-app"
-        sh "docker logs dev-app"
+        sh "docker run -d ${DOCKERHUB_CREDENTIALS_USR}/flaskapp:latest -e DEBUG=True --name dev-app"
       }
     }
     stage("Running application on prod") {
@@ -78,14 +64,9 @@ pipeline {
           DEBUG == "false" 
         }
       }
-      agent {
-        label 'Slave-2' 
-      }
       steps {
-        sh "echo ${DOCKERHUB_CREDENTIALS_PSW} | docker login -u ${DOCKERHUB_CREDENTIALS_USR} --password-stdin"
-        //sh "docker pull ${DOCKERHUB_CREDENTIALS_USR}/flaskapp:latest"
-        //sh "docker run -d ${DOCKERHUB_CREDENTIALS_USR}/flaskapp:latest --name prod-app"
-        //sh "docker logs prod-app"
+        sh "docker pull ${DOCKERHUB_CREDENTIALS_USR}/flaskapp:latest"
+        sh "docker run -d ${DOCKERHUB_CREDENTIALS_USR}/flaskapp:latest -e DEBUG=False --name prod-app"
       }
     }
   }
