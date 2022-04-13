@@ -12,30 +12,6 @@ services:
       - jenkins_data:/bitnami/jenkins
       - /var/run/docker.sock:/var/run/docker.sock
 
-  agent-1:
-    build: ./agents/dev-ag-1 
-    container_name: 'agent-1'
-    expose:
-      - 22
-    ports:
-      - '5000:5000'
-    environment:
-      - JENKINS_AGENT_SSH_PUBKEY=ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC1gGt5uj8PlktfvF8vAR2L1iELFiI2CwnvziLh0DmaQGVGjcMl9TeOWspehrMIcha5BqV4yOh24zYQAqwinT70iq0JkdcmkNxAykwKkmjYJzjh5JgBAeWlgdQzSFiBdd9324oeZUPena0f+m7ojFbfJUlkqVekU7KhLnP4cVRyVZmtr0bYl0w/I6EvMeIrwc9KcFS/3ddoVUzCQTYeXurWZ/e0Q2KxjZaJHECduQFBFXtahZuee8vtrrVrnzgfXRvjyvJ/jR0UMkVTOlsr3WrGkUeOXnBpQ4cZRIa+LgExDAa6ncUMdXyLF/tAmnFRUrmoZ0dDxxBChhXgN9+dxFn5Mm6ujO0mPdydTu8A+BrkBBqsMVzotPCFXIsAmm8hbAxfmwR+g5fnJ3JGkL+R3IM6HSotkHKrW+lzbvFBrBYWNmixvg1GsgVA37mTylZcKjX6ko8IVHriYosoBN+mMRNjo7vEkzATgmZ3RkNQCpgMkWRdkQPBP6KS4W6pAN4VLDc= hakob@hakob-21
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-
-  agent-2:
-    build: ./agents/prod-ag-2
-    container_name: 'agent-2'
-    expose:
-      - 22
-    ports:
-      - '5001:5001'
-    environment:
-      - JENKINS_AGENT_SSH_PUBKEY=ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC1wz9d38BOdVoOjlzt2SVPKsHsn2b1dhsqAFAnX1W9jWpxAjewXbfUdpLWVlGlal2gs/SCCn6ccyZSSYprCV/vmudHJ6scfuVjYvYB0RUPdfgKy0LWdEbqLcPUTOK7YnIuwMZfltFFE8GBauxA4/CrVTk7fDQSI0D+bAuPseuK4W2MnkkKCifnb0C3UEFIQoHmEl2D0KhWs8GJcCvFDXG4uFED06vq2s6DsTcGXcxSMnHjoMfiBX7aE7QYWV0vYx5fsGiMnLdUcQb2xZwhbY0G4NUhXctm3T8Rm1rQ7x17kgnZmKtlsaeOFNST7CA3l46hwZSDx1zLW9G67M4lMwKPpOwAGhPjaM6FBw6RAekcghYMw9Z47TUMCW1lNa2GAC5c1MgVeMaZeSAkne/1x+PF45Zd+v2UCEqLu5yXh/roOJZCDIkHirvL3jKpZzOi4v6bNKiyCe8sQ1cRSWMSolUQaGxUFX0/aUut3vkIKaM5dv/OX2PPJM+TvX+yyU3poIs= hakob@hakob-21
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-
 volumes:
   jenkins_data:
     driver: local

@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-
+import argparse
 from flask import Flask
 
 app = Flask(__name__)
@@ -9,5 +9,8 @@ def hello():
     return "Hello World!"
 
 if __name__ == "__main__":
-    app.debug = True
+    parser = argparse.ArgumentParser(description='Pass debug variable')
+    parser.add_argument('--deb', required=True, type=bool, help='booleand debug argument')
+    args = parser.parse_args()
+    app.debug = args.deb
     app.run(host="0.0.0.0", port="5050")    
