@@ -32,11 +32,11 @@ pipeline {
           }
           for(el in RELEASE) {
             if(el == "t") { // if RELEASE variable is true and the first char is 't'
-              DEBUG = 'true'
+              DEBUG = 'True'
               break;
             }
             else if(el == "f") { // if RELEASE variable is false and the first char is 'f'
-              DEBUG = 'false'
+              DEBUG = 'False'
               break;
             }
             else {
@@ -50,7 +50,7 @@ pipeline {
     stage("Running application on dev") {
       when {
         expression {
-          DEBUG == "true" 
+          DEBUG == "True" 
         }
       }
       steps {
@@ -61,7 +61,7 @@ pipeline {
     stage("Running application on prod") {
       when {
         expression {
-          DEBUG == "false" 
+          DEBUG == "False" 
         }
       }
       steps {
