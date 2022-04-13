@@ -7,6 +7,7 @@ pipeline {
     stage("Build application image") {
       steps {
         script {
+          sh "echo ${DOCKERHUB_CREDENTIALS_PSW} | docker login -u ${DOCKERHUB_CREDENTIALS_USR} --password-stdin"
           //sh "cd ./app/; docker build -t ${DOCKERHUB_CREDENTIALS_USR}/flaskapp ."
           step([$class: 'DockerBuilderPublisher', cleanImages: false, cleanupWithJenkinsJobDelete: false, cloud: '', dockerFileDirectory: 'app/', fromRegistry: [credentialsId: 'docker-repo', url: 'https://hub.docker.com/u/hakobmkoyan771'], pull: true, pushCredentialsId: 'docker-repo', pushOnSuccess: true, tagsString: 'hakobmkoyan771/FlaskApp'])
         }
