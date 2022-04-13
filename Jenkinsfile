@@ -6,10 +6,10 @@ pipeline {
   stages {
     stage("Build application image") {
       steps {
-        script {
+        //script {
           //sh "cd ./app/; docker build -t ${DOCKERHUB_CREDENTIALS_USR}/flaskapp ."
           step([$class: 'DockerBuilderPublisher', cleanImages: false, cleanupWithJenkinsJobDelete: false, cloud: '', dockerFileDirectory: './app/', fromRegistry: [credentialsId: 'docker-repo'], pull: true, pushCredentialsId: 'docker-repo', pushOnSuccess: true, tagsString: 'hakobmkoyan771/FlaskApp'])
-        }
+        //}
       }
     }
     stage("Deploy application image") {
