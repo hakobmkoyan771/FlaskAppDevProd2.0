@@ -1,17 +1,14 @@
 pipeline {
   agent any
-  options {
-    timeout(time: 4, unit: 'MINUTES')
-  }
   environment {
-    GIT_USERNAME = 'hakobmkoyan771'
     DOCKERHUB_CREDENTIALS = credentials('docker-repo')
   }
   stages {
     stage("Build application image") {
       steps {
         script {
-          sh "cd ./app/; docker build -t ${DOCKERHUB_CREDENTIALS_USR}/flaskapp ."
+          //sh "cd ./app/; docker build -t ${DOCKERHUB_CREDENTIALS_USR}/flaskapp ."
+          step([$class: 'DockerBuilderPublisher', cleanImages: false, cleanupWithJenkinsJobDelete: false, cloud: '', dockerFileDirectory: './app/', fromRegistry: [credentialsId: 'docker-repo'], pull: true, pushCredentialsId: 'docker-repo', pushOnSuccess: true, tagsString: 'hakobmkoyan771/FlaskApp'])
         }
       }
     }
