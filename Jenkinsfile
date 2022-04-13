@@ -64,8 +64,7 @@ pipeline {
       }
       steps {
         sh "docker pull ${DOCKERHUB_CREDENTIALS_USR}/flaskapp:latest"
-        //sh "docker run -d  -e DEBUG=False --name prod-app -p 5050:5050 ${DOCKERHUB_CREDENTIALS_USR}/flaskapp:latest"
-        step([$class: 'DockerBuilderControl', option: <object of type com.nirima.jenkins.plugins.docker.builder.DockerBuilderControlOptionRun>])
+        sh "docker run -d  -e DEBUG=False --name prod-app -p 5050:5050 ${DOCKERHUB_CREDENTIALS_USR}/flaskapp:latest"
         sh 'sleep 300'
         sh "docker container rm -f prod-app"
       }
