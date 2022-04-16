@@ -12,7 +12,7 @@ pipeline {
         script {
           //sh "cd ./app/; docker build -t ${DOCKERHUB_CREDENTIALS_USR}/flaskapp ."
           //sh "cd ./app/"
-          docker.build("hakobmkoyan771/flaskapp:${env.BUILD_ID}", "-f ./app/ .")
+          docker.build("hakobmkoyan771/flaskapp:${env.BUILD_ID}", "-f ./app/Dockerfile .")
         }
       }
     }/*
