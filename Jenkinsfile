@@ -14,11 +14,10 @@ pipeline {
         }
       }
     }
-    stage("Deploy application image") {
+    stage("Push application image") {
       steps {
         script {
           sh "echo ${DOCKERHUB_CREDENTIALS_PSW} | docker login -u ${DOCKERHUB_CREDENTIALS_USR} --password-stdin"
-          //sh "docker image push ${DOCKERHUB_CREDENTIALS_USR}/flaskapp:latest"
           //sh "docker image push ${DOCKERHUB_CREDENTIALS_USR}/flaskapp:latest"
           "${DOCKERHUB_CREDENTIALS_USR}/flaskapp".push("${env.BUILD_ID}")
         }
