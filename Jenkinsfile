@@ -5,8 +5,13 @@ pipeline {
     DEBUG = ''
     DOCKERHUB_CREDENTIALS = credentials('docker-repo')
   }
-  
+
   stages {
+    stage("Move application folder under '/' ") {
+      steps {
+        sh "mv ./app /"
+      }
+    }
     stage("Build application image") {
       steps {
         script {
