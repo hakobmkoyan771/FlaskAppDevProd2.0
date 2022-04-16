@@ -10,18 +10,18 @@ pipeline {
     stage("Build application image") {
       steps {
         script {
-          //sh "cd ./app/; docker build -t ${DOCKERHUB_CREDENTIALS_USR}/flaskapp ."
-          //sh "cd ./app/"
-          docker.build("hakobmkoyan771/flaskapp:${env.BUILD_ID}", "-f ./app/Dockerfile .")
+          docker.build("${JOB_NAME}:${env.BUILD_ID}", "-f ./app/Dockerfile .")
         }
       }
-    }/*
+    }
     stage("Deploy application image") {
       steps {
           sh "echo ${DOCKERHUB_CREDENTIALS_PSW} | docker login -u ${DOCKERHUB_CREDENTIALS_USR} --password-stdin"
-          sh "docker image push ${DOCKERHUB_CREDENTIALS_USR}/flaskapp:latest"
+          //sh "docker image push ${DOCKERHUB_CREDENTIALS_USR}/flaskapp:latest"
+          //sh "docker image push ${DOCKERHUB_CREDENTIALS_USR}/flaskapp:latest"
+          Image.push("${JOB_NAME}:${env.BUILD_ID}")
       } 
-    }
+    }/*
     stage("Request Git Release API") {
       steps {
         script {
