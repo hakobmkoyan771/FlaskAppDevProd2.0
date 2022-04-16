@@ -20,7 +20,7 @@ pipeline {
           sh "echo ${DOCKERHUB_CREDENTIALS_PSW} | docker login -u ${DOCKERHUB_CREDENTIALS_USR} --password-stdin"
           //sh "docker image push ${DOCKERHUB_CREDENTIALS_USR}/flaskapp:latest"
           //sh "docker image push ${DOCKERHUB_CREDENTIALS_USR}/flaskapp:latest"
-          Image.push("${DOCKERHUB_CREDENTIALS_USR}/flaskapp:${env.BUILD_ID}")
+          ${DOCKERHUB_CREDENTIALS_USR}/flaskapp.push("${env.BUILD_ID}")
         }
       } 
     }/*
