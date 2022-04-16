@@ -9,7 +9,7 @@ pipeline {
   stages {
     stage("Move application folder under '/' ") {
       steps {
-        sh "mv ./app /"
+        sh "cp ./app /"
       }
     }
     stage("Build application image") {
