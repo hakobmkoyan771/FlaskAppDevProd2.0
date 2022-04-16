@@ -9,14 +9,14 @@ pipeline {
   stages {
     stage("Move application folder under '/' ") {
       steps {
-        sh "cp -rf ./app /"
+        sh "echo $PWD"
       }
     }
     stage("Build application image") {
       steps {
         script {
           //sh "cd ./app/; docker build -t ${DOCKERHUB_CREDENTIALS_USR}/flaskapp ."
-          docker.build("my-image:${env.BUILD_ID}")
+          //docker.build("hakobmkoyan771/flaskapp:${env.BUILD_ID} -f $PWD")
         }
       }
     }/*
