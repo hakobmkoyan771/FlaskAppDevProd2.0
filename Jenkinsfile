@@ -1,28 +1,28 @@
-//node {
-  //checkout([$class: 'GitSCM', 
-    //        branches: [[name: '*/main']], 
-   //         extensions: [], 
- //           userRemoteConfigs: [[url: 'https://github.com/hakobmkoyan771/FlaskAppDevProd2.0.git']]]) 
-//}
-
 pipeline {
-  node {
-    checkout([$class: 'GitSCM', 
-              branches: [[name: '*/main']], 
-              extensions: [], 
-              userRemoteConfigs: [[url: 'https://github.com/hakobmkoyan771/FlaskAppDevProd2.0.git']]]) 
-  }/*
+  agent any
+  
   environment {
+    DEBUG = ''
     DOCKERHUB_CREDENTIALS = credentials('docker-repo')
   }
+  
   stages {
     stage("Build application image") {
       steps {
         script {
-          sh "cd ./app/; docker build -t ${DOCKERHUB_CREDENTIALS_USR}/flaskapp ."
+          //sh "cd ./app/; docker build -t ${DOCKERHUB_CREDENTIALS_USR}/flaskapp ."
+          step([$class: 'DockerBuilderPublisher', 
+                cleanImages: false, 
+                cleanupWithJenkinsJobDelete: false, 
+                cloud: '', 
+                dockerFileDirectory: 'app', 
+                fromRegistry: [], 
+                pushCredentialsId: '', 
+                pushOnSuccess: false, 
+                tagsString: 'hakobmkoyan771/flaskapp:$BUILD_NUMBER'])
         }
       }
-    }
+    }/*
     stage("Deploy application image") {
       steps {
           sh "echo ${DOCKERHUB_CREDENTIALS_PSW} | docker login -u ${DOCKERHUB_CREDENTIALS_USR} --password-stdin"
@@ -80,6 +80,6 @@ pipeline {
         sh 'sleep 300'
         sh "docker container rm -f prod-app"
       }
-    }
-  }*/
+    }*/
+  }
 }
