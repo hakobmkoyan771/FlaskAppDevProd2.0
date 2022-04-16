@@ -11,8 +11,8 @@ pipeline {
     stage("Build application image") {
       steps {
         script {
-          docker.build("abc:${env.BUILD_ID}", "-f ./app/Dockerfile .")
-          APP_IMG = "${DOCKERHUB_CREDENTIALS_USR}/flaskapp"
+          docker.build("${DOCKERHUB_CREDENTIALS_USR}/flaskapp:${env.BUILD_ID}", "-f ./app/Dockerfile .")
+          APP_IMG = "${DOCKERHUB_CREDENTIALS_USR}/flaskapp:${env.BUILD_ID}"
         }
       }
     }
@@ -21,7 +21,7 @@ pipeline {
         script {
           sh "echo ${DOCKERHUB_CREDENTIALS_PSW} | docker login -u ${DOCKERHUB_CREDENTIALS_USR} --password-stdin"
           //sh "docker image push ${DOCKERHUB_CREDENTIALS_USR}/flaskapp:latest"
-          image("abc").push("${env.BUILD_ID}")
+          APP_IMG.push("${env.BUILD_ID}")
         }
       } 
     }/*
