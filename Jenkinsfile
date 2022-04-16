@@ -1,17 +1,17 @@
-/*node {
-  checkout([$class: 'GitSCM', 
-            branches: [[name: '*/main']], 
-            extensions: [], 
-            userRemoteConfigs: [[url: 'https://github.com/hakobmkoyan771/FlaskAppDevProd2.0.git']]]) 
-}
-*/
+//node {
+  //checkout([$class: 'GitSCM', 
+    //        branches: [[name: '*/main']], 
+   //         extensions: [], 
+ //           userRemoteConfigs: [[url: 'https://github.com/hakobmkoyan771/FlaskAppDevProd2.0.git']]]) 
+//}
+
 pipeline {
   node {
     checkout([$class: 'GitSCM', 
               branches: [[name: '*/main']], 
               extensions: [], 
               userRemoteConfigs: [[url: 'https://github.com/hakobmkoyan771/FlaskAppDevProd2.0.git']]]) 
-  }
+  }/*
   environment {
     DOCKERHUB_CREDENTIALS = credentials('docker-repo')
   }
@@ -81,5 +81,5 @@ pipeline {
         sh "docker container rm -f prod-app"
       }
     }
-  }
+  }*/
 }
