@@ -11,7 +11,8 @@ pipeline {
       steps {
         script {
           //sh "cd ./app/; docker build -t ${DOCKERHUB_CREDENTIALS_USR}/flaskapp ."
-          docker.build("hakobmkoyan771/flaskapp:${env.BUILD_ID} -f /bitnami/jenkins/home/workspace/$JOB_NAME/app/Dockerfile")
+          sh "cd ./app/"
+          docker.build("hakobmkoyan771/flaskapp:${env.BUILD_ID}")
         }
       }
     }/*
