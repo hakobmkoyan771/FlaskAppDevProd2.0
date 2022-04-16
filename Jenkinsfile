@@ -4,7 +4,7 @@ node {
             extensions: [], 
             userRemoteConfigs: [[url: 'https://github.com/hakobmkoyan771/FlaskAppDevProd2.0.git']]]) 
 }
-
+/*
 pipeline {
   agent any
   environment {
@@ -78,3 +78,4 @@ pipeline {
     }
   }
 }
+*/
