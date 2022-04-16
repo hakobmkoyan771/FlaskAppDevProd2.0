@@ -4,7 +4,7 @@ USER 0
 
 ENV DEBUG='False'
 
-COPY app.py /app/
+COPY ./app/app.py /app/
 
 RUN pip install flask
 
