@@ -14,7 +14,8 @@ pipeline {
           checkout([$class: 'GitSCM', 
                     branches: [[name: '*/main']], 
                     extensions: [], 
-                    userRemoteConfigs: [[url: 'https://github.com/hakobmkoyan771/FlaskAppDevProd.git']]]) 
+                    userRemoteConfigs: [[url: 'https://github.com/hakobmkoyan771/FlaskAppDevProd.git']]])
+              sh 'ls'
           }
           //echo
           //sh "cd ./app/; docker build -t ${DOCKERHUB_CREDENTIALS_USR}/flaskapp ."
