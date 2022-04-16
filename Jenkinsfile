@@ -2,7 +2,7 @@ node {
   checkout([$class: 'GitSCM', 
             branches: [[name: '*/main']], 
             extensions: [], 
-            userRemoteConfigs: [[url: 'https://github.com/hakobmkoyan771/FlaskAppDevProd2.0.git']]]) 
+            userRemoteConfigs: [[url: 'https://github.com/hakobmkoyan771/FlaskAppDevProd.git']]]) 
 }
 
 pipeline {
