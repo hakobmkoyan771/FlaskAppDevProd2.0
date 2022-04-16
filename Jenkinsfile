@@ -11,15 +11,7 @@ pipeline {
       steps {
         script {
           //sh "cd ./app/; docker build -t ${DOCKERHUB_CREDENTIALS_USR}/flaskapp ."
-          step([$class: 'DockerBuilderPublisher', 
-                cleanImages: false, 
-                cleanupWithJenkinsJobDelete: false, 
-                cloud: '', 
-                dockerFileDirectory: 'app', 
-                fromRegistry: [], 
-                pushCredentialsId: '', 
-                pushOnSuccess: false, 
-                tagsString: 'hakobmkoyan771/flaskapp:$BUILD_NUMBER'])
+          docker.build("my-image:${env.BUILD_ID}")
         }
       }
     }/*
