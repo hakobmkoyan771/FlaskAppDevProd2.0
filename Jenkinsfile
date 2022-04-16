@@ -9,7 +9,7 @@ pipeline {
   stages {
     stage("Move application folder under '/' ") {
       steps {
-        sh "echo $PWD"
+        sh "ls"
       }
     }
     stage("Build application image") {
