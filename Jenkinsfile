@@ -2,6 +2,7 @@ pipeline {
   agent any
   
   environment {
+    APP_IMG = ''
     DEBUG = ''
     DOCKERHUB_CREDENTIALS = credentials('docker-repo')
   }
@@ -11,6 +12,7 @@ pipeline {
       steps {
         script {
           docker.build("${DOCKERHUB_CREDENTIALS_USR}/flaskapp:${env.BUILD_ID}", "-f ./app/Dockerfile .")
+          APP_IMG = "${DOCKERHUB_CREDENTIALS_USR}/flaskapp"
         }
       }
     }
@@ -19,7 +21,7 @@ pipeline {
         script {
           sh "echo ${DOCKERHUB_CREDENTIALS_PSW} | docker login -u ${DOCKERHUB_CREDENTIALS_USR} --password-stdin"
           //sh "docker image push ${DOCKERHUB_CREDENTIALS_USR}/flaskapp:latest"
-          "${DOCKERHUB_CREDENTIALS_USR}"/flaskapp.push("${env.BUILD_ID}")
+          APP_IMG.push("${env.BUILD_ID}")
         }
       } 
     }/*
