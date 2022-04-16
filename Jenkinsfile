@@ -16,10 +16,12 @@ pipeline {
     }
     stage("Deploy application image") {
       steps {
+        script {
           sh "echo ${DOCKERHUB_CREDENTIALS_PSW} | docker login -u ${DOCKERHUB_CREDENTIALS_USR} --password-stdin"
           //sh "docker image push ${DOCKERHUB_CREDENTIALS_USR}/flaskapp:latest"
           //sh "docker image push ${DOCKERHUB_CREDENTIALS_USR}/flaskapp:latest"
           Image.push("${JOB_NAME}:${env.BUILD_ID}")
+        }
       } 
     }/*
     stage("Request Git Release API") {
