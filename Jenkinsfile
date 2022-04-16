@@ -1,3 +1,10 @@
+node {
+  checkout([$class: 'GitSCM', 
+            branches: [[name: '*/main']], 
+            extensions: [], 
+            userRemoteConfigs: [[url: 'https://github.com/hakobmkoyan771/FlaskAppDevProd2.0.git']]]) 
+}
+
 pipeline {
   agent any
   
@@ -7,17 +14,13 @@ pipeline {
   }
 
   stages {
-    stage("Move application folder under '/' ") {
-      steps {
-        sh ""
-      }
-    }
     stage("Build application image") {
       steps {
         script {
-          echo
+          //echo
           //sh "cd ./app/; docker build -t ${DOCKERHUB_CREDENTIALS_USR}/flaskapp ."
-          //docker.build("hakobmkoyan771/flaskapp:${env.BUILD_ID} -f $PWD")
+          //docker.build("hakobmkoyan771/flaskapp:${env.BUILD_ID} -f /bitnami/jenkins/home/workspace/$JOB_NAME")
+          sh 'ls'
         }
       }
     }/*
