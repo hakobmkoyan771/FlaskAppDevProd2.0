@@ -9,7 +9,7 @@ pipeline {
     timeout(unit: 'MINUTES', time: 2) 
   }
   triggers {
-    GenericTrigger(causeString: 'Generic Cause', genericVariables: [[defaultValue: '', key: 'release', regexpFilter: '', value: '$.object.release.prerelease']], regexpFilterExpression: '', regexpFilterText: '', token: '', tokenCredentialId: '')
+    GenericTrigger(causeString: 'Generic Cause', genericVariables: [[defaultValue: '', key: 'release', regexpFilter: '', value: '$.release.prerelease']], regexpFilterExpression: '', regexpFilterText: '', token: '', tokenCredentialId: '')
   }
   stages {/*
     stage("Build application image") {
@@ -92,7 +92,7 @@ pipeline {
     stage("abc") {
       steps {
         script {
-          echo $release
+          echo ${release}
         }
       }
     }
