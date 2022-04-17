@@ -1,14 +1,18 @@
 pipeline {
   agent any
   environment {
-    DEBUG = ''
     DOCKERHUB_CREDENTIALS = credentials('docker-repo')
   }
   options {
     timeout(unit: 'MINUTES', time: 2) 
   }
   triggers {
-    GenericTrigger(causeString: 'Generic Cause', genericVariables: [[defaultValue: '', key: 'release', regexpFilter: '', value: '$.release.prerelease']], regexpFilterExpression: '', regexpFilterText: '', token: '', tokenCredentialId: '')
+    GenericTrigger(causeString: 'Generic Cause', 
+                   genericVariables: [[defaultValue: '', key: 'release', regexpFilter: '', value: '$.release.prerelease']], 
+                   regexpFilterExpression: '', 
+                   regexpFilterText: '', 
+                   token: '', 
+                   tokenCredentialId: '')
   }
   stages {
     stage("Build application image") {
