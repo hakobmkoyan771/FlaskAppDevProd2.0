@@ -2,7 +2,6 @@ pipeline {
   agent any
   
   environment {
-    APP_IMG = ''
     DEBUG = ''
     DOCKERHUB_CREDENTIALS = credentials('docker-repo')
   }
@@ -11,21 +10,28 @@ pipeline {
     stage("Build application image") {
       steps {
         script {
-          docker.build("${DOCKERHUB_CREDENTIALS_USR}/flaskapp:${env.BUILD_ID}", "-f ./app/Dockerfile .")
-          APP_IMG = "${DOCKERHUB_CREDENTIALS_USR}/flaskapp:${env.BUILD_ID}"
+          try {
+            docker.build("${DOCKERHUB_CREDENTIALS_USR}/flaskapp:${env.BUILD_ID}", "-f ./app/Dockerfile .")
+          }
+          catch(Exception e) {
+            error("error making image of application") 
+          }
         }
       }
     }
     stage("Push application image") {
       steps {
         script {
-          sh "echo ${DOCKERHUB_CREDENTIALS_PSW} | docker login -u ${DOCKERHUB_CREDENTIALS_USR} --password-stdin"
-          //sh "docker image push ${DOCKERHUB_CREDENTIALS_USR}/flaskapp:latest"
-          //APP_IMG.push("${env.BUILD_ID}")
-          APP_IMG.id
+          try {
+            sh "echo ${DOCKERHUB_CREDENTIALS_PSW} | docker login -u ${DOCKERHUB_CREDENTIALS_USR} --password-stdin"
+            sh "docker image push ${DOCKERHUB_CREDENTIALS_USR}/flaskapp:${env.BUILD_ID}"
+          }
+          catch(Exception e) {
+            error("error pushing image") 
+          }
         }
       } 
-    }/*
+    }
     stage("Request Git Release API") {
       steps {
         script {
@@ -35,6 +41,13 @@ pipeline {
           catch(Exception e) {
             error("Invalid address") 
           }
+          if(RELEASE == "true,") {
+            echo "abc"
+          }
+          else if(RELEASE == "false,") {
+            echo "asd" 
+          }
+          /*
           for(el in RELEASE) {
             if(el == "t") { // if RELEASE variable is true and the first char is 't'
               DEBUG = 'True'
@@ -48,10 +61,10 @@ pipeline {
               error("Error: link is broken")
               break;
             }
-          }
+          }*/
         }
       }
-    }
+    }/*
     stage("Running application on dev") {
       when {
         expression {
