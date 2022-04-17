@@ -68,8 +68,8 @@ pipeline {
       steps {
         sh "docker run -e DEBUG=False --name prod-app -p 5050:5050 ${DOCKERHUB_CREDENTIALS_USR}/flaskapp:${env.BUILD_ID}"
       }
-    }
-  }*/
+    }*/
+  }
   post {
     always {
       sh "docker container rm -f dev-app || true" 
