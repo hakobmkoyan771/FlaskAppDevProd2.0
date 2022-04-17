@@ -1,6 +1,5 @@
 pipeline {
   agent any
-  
   environment {
     DEBUG = ''
     DOCKERHUB_CREDENTIALS = credentials('docker-repo')
@@ -42,38 +41,24 @@ pipeline {
         script {
           if(release == true) {
             sh "docker run -p 5050:5050 --name dev-app -e DEBUG=True ${DOCKERHUB_CREDENTIALS_USR}/flaskapp:${env.BUILD_ID}"
+            DEBUG = True
           }
           else {
             sh "docker run -p 5050:5050 --name prod-app -e DEBUG=False ${DOCKERHUB_CREDENTIALS_USR}/flaskapp:${env.BUILD_ID}"
+            DEBUG = False
           }
         }
       }
-    }/*
-    stage("Running application on dev") {
-      when {
-        expression {
-          DEBUG == "True" 
-        }
-      }
-      steps {
-        sh "docker run -e DEBUG=True --name dev-app -p 5050:5050 ${DOCKERHUB_CREDENTIALS_USR}/flaskapp:${env.BUILD_ID}"
-      }
     }
-    stage("Running application on prod") {
-      when {
-        expression {
-          DEBUG == "False" 
-        }
-      }
-      steps {
-        sh "docker run -e DEBUG=False --name prod-app -p 5050:5050 ${DOCKERHUB_CREDENTIALS_USR}/flaskapp:${env.BUILD_ID}"
-      }
-    }*/
   }
   post {
     always {
-      sh "docker container rm -f dev-app || true" 
-      sh "docker container rm -f prod-app || true" 
+      if(DEBUG == True) {
+        sh "docker container rm -f dev-app"
+      }
+      else {
+        sh "docker container rm -f prod-app"
+      }
     }
   }
 }
