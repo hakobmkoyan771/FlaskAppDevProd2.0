@@ -53,11 +53,13 @@ pipeline {
   }
   post {
     always {
-      if(DEBUG == True) {
-        sh "docker container rm -f dev-app"
-      }
-      else {
-        sh "docker container rm -f prod-app"
+      script {
+        if(DEBUG == True) {
+          sh "docker container rm -f dev-app"
+        }
+        else {
+          sh "docker container rm -f prod-app"
+        }
       }
     }
   }
