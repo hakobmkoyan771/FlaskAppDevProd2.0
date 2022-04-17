@@ -41,10 +41,10 @@ pipeline {
       steps {
         script {
           if(release == true) {
-            Image.run("-e DEBUG=True", "--name dev-app", "-p 5050:5050", "${DOCKERHUB_CREDENTIALS_USR}/flaskapp:${env.BUILD_ID}") 
+            dockerImage.run("-e DEBUG=True", "--name dev-app", "-p 5050:5050", "${DOCKERHUB_CREDENTIALS_USR}/flaskapp:${env.BUILD_ID}") 
           }
           else {
-             Image.run("-e DEBUG=False", "--name prod-app", "-p 5050:5050", "${DOCKERHUB_CREDENTIALS_USR}/flaskapp:${env.BUILD_ID}") 
+            dockerImage.run("-e DEBUG=False", "--name prod-app", "-p 5050:5050", "${DOCKERHUB_CREDENTIALS_USR}/flaskapp:${env.BUILD_ID}") 
           }
         }
       }
