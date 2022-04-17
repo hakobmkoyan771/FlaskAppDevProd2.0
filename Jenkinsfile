@@ -36,7 +36,7 @@ pipeline {
         }
       } 
     }
-    stage("Run application") {
+    stage("Start application container") {
       steps {
         script {
           if(release == 'true') {
