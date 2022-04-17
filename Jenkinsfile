@@ -11,7 +11,7 @@ pipeline {
   triggers {
     GenericTrigger(causeString: 'Generic Cause', genericVariables: [[defaultValue: '', key: 'release', regexpFilter: '', value: '$.release.prerelease']], regexpFilterExpression: '', regexpFilterText: '', token: '', tokenCredentialId: '')
   }
-  stages {/*
+  stages {
     stage("Build application image") {
       steps {
         script {
@@ -37,32 +37,18 @@ pipeline {
         }
       } 
     }
-    stage("Request Git Release API") {
+    stage("Run application") {
       steps {
         script {
-          try {
-            RELEASE = sh returnStdout: true, script: '''rel=$(curl https://api.github.com/repos/hakobmkoyan771/FlaskAppDevProd2.0/releases | grep 'prerelease' | awk '{print $2}' | awk 'FNR == 1 {print}'); echo $rel'''
+          if(release == true) {
+            Image.run("-e DEBUG=True", "--name dev-app", "-p 5050:5050", "${DOCKERHUB_CREDENTIALS_USR}/flaskapp:${env.BUILD_ID}") 
           }
-          catch(Exception e) {
-            error("Invalid address") 
-          }
-          for(el in RELEASE) {
-            if(el == "t") {
-              DEBUG = 'True'
-              break;
-            }
-            else if(el == "f") {
-              DEBUG = 'False'
-              break;
-            }
-            else {
-              error("Error: link is broken")
-              break;
-            }
+          else {
+             Image.run("-e DEBUG=False", "--name prod-app", "-p 5050:5050", "${DOCKERHUB_CREDENTIALS_USR}/flaskapp:${env.BUILD_ID}") 
           }
         }
       }
-    }
+    }/*
     stage("Running application on dev") {
       when {
         expression {
@@ -83,18 +69,11 @@ pipeline {
         sh "docker run -e DEBUG=False --name prod-app -p 5050:5050 ${DOCKERHUB_CREDENTIALS_USR}/flaskapp:${env.BUILD_ID}"
       }
     }
-  }
+  }*/
   post {
     always {
       sh "docker container rm -f dev-app || true" 
       sh "docker container rm -f prod-app || true" 
-    }*/
-    stage("abc") {
-      steps {
-        script {
-          echo release
-        }
-      }
     }
   }
 }
