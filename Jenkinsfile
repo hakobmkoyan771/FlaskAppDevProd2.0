@@ -55,10 +55,10 @@ pipeline {
               break;
             }
           }*/
-          if(RELEASE == "true, ") {
+          if("true" in RELEASE) {
             echo "true" 
           }
-          else if(RELEASE == "false, ") {
+          else if("false" in RELEASE) {
             echo "false" 
           }
           else {
