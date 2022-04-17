@@ -8,7 +8,7 @@ pipeline {
   }
   triggers {
     GenericTrigger(causeString: 'Generic Cause', 
-                   genericVariables: [[defaultValue: '', key: 'release', regexpFilter: '', value: '$.release.prerelease']], 
+                   genericVariables: [[defaultValue: '', key: 'prerelease', regexpFilter: '', value: '$.release.prerelease']], 
                    regexpFilterExpression: '', 
                    regexpFilterText: '', 
                    token: '', 
@@ -43,10 +43,10 @@ pipeline {
     stage("Start application container") {
       steps {
         script {
-          if(release == 'true') {
+          if(prerelease == 'true') {
             sh "docker run -p 5050:5050 --name dev-app -e DEBUG=True ${DOCKERHUB_CREDENTIALS_USR}/flaskapp:${env.BUILD_ID}"
           }
-          else if(release == 'false') {
+          else if(prerelease == 'false') {
             sh "docker run -p 5050:5050 --name prod-app -e DEBUG=False ${DOCKERHUB_CREDENTIALS_USR}/flaskapp:${env.BUILD_ID}"
           }
         }
