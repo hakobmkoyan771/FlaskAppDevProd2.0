@@ -8,7 +8,18 @@ pipeline {
   options {
     timeout(unit: 'MINUTES', time: 2) 
   }
-  stages {
+  triggers {
+    GenericTrigger causeString: 'Generic Cause', 
+      genericVariables: [[defaultValue: '', 
+                          key: 'prerelease', 
+                          regexpFilter: '', 
+                          value: '$.prerelease']], 
+      regexpFilterExpression: '', 
+      regexpFilterText: '', 
+      token: '', 
+      tokenCredentialId: ''
+  }
+  stages {/*
     stage("Build application image") {
       steps {
         script {
@@ -85,6 +96,18 @@ pipeline {
     always {
       sh "docker container rm -f dev-app || true" 
       sh "docker container rm -f prod-app || true" 
+    }*/
+    stage("abc") {
+      steps {
+        script {
+          if($prerelease == true)  {
+            echo "true" 
+          }
+          else if($prerelease == false) {
+            echo "false" 
+          }
+        }
+      }
     }
   }
 }
