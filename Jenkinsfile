@@ -39,11 +39,10 @@ pipeline {
     stage("Run application") {
       steps {
         script {
-          echo release
-          if(release == true) {
+          if(release == 'true') {
             sh "docker run -p 5050:5050 --name dev-app -e DEBUG=True ${DOCKERHUB_CREDENTIALS_USR}/flaskapp:${env.BUILD_ID}"
           }
-          else if(release == false) {
+          else if(release == 'false') {
             sh "docker run -p 5050:5050 --name prod-app -e DEBUG=False ${DOCKERHUB_CREDENTIALS_USR}/flaskapp:${env.BUILD_ID}"
           }
         }
