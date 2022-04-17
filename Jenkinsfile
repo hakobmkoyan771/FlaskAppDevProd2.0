@@ -5,7 +5,9 @@ pipeline {
     DEBUG = ''
     DOCKERHUB_CREDENTIALS = credentials('docker-repo')
   }
-
+  options {
+    timeout(unit: 'MINUTES', time: 2) 
+  }
   stages {
     stage("Build application image") {
       steps {
@@ -40,13 +42,13 @@ pipeline {
           }
           catch(Exception e) {
             error("Invalid address") 
-          }/*
+          }
           for(el in RELEASE) {
-            if(el == "t") { // if RELEASE variable is true and the first char is 't'
+            if(el == "t") {
               DEBUG = 'True'
               break;
             }
-            else if(el == "f") { // if RELEASE variable is false and the first char is 'f'
+            else if(el == "f") {
               DEBUG = 'False'
               break;
             }
@@ -54,19 +56,10 @@ pipeline {
               error("Error: link is broken")
               break;
             }
-          }*/
-          if("true" in RELEASE) {
-            echo "true" 
-          }
-          else if("false" in RELEASE) {
-            echo "false" 
-          }
-          else {
-            echo "asf" 
           }
         }
       }
-    }/*
+    }
     stage("Running application on dev") {
       when {
         expression {
@@ -75,9 +68,7 @@ pipeline {
       }
       steps {
         sh "docker pull ${DOCKERHUB_CREDENTIALS_USR}/flaskapp:latest"
-        sh "docker run -d -e DEBUG=True --name dev-app -p 5040:5050 ${DOCKERHUB_CREDENTIALS_USR}/flaskapp:latest"
-        sh 'sleep 300'
-        sh "docker container rm -f dev-app"
+        sh "docker run -e DEBUG=True --name dev-app -p 5050:5050 ${DOCKERHUB_CREDENTIALS_USR}/flaskapp:${env.BUILD_ID}"
       }
     }
     stage("Running application on prod") {
@@ -88,10 +79,14 @@ pipeline {
       }
       steps {
         sh "docker pull ${DOCKERHUB_CREDENTIALS_USR}/flaskapp:latest"
-        sh "docker run -d  -e DEBUG=False --name prod-app -p 5050:5050 ${DOCKERHUB_CREDENTIALS_USR}/flaskapp:latest"
-        sh 'sleep 300'
-        sh "docker container rm -f prod-app"
+        sh "docker run -e DEBUG=False --name prod-app -p 5050:5050 ${DOCKERHUB_CREDENTIALS_USR}/flaskapp:${env.BUILD_ID}"
       }
-    }*/
+    }
+  }
+  post {
+    always {
+      sh "docker container rm -f dev-app || true" 
+      sh "docker container rm -f prod-app || true" 
+    }
   }
 }
