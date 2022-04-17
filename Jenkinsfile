@@ -9,15 +9,7 @@ pipeline {
     timeout(unit: 'MINUTES', time: 2) 
   }
   triggers {
-    GenericTrigger(
-     genericVariables: [
-      [key: 'prerelease', value: '$']
-     ],
-
-     printContributedVariables: true,
-     printPostContent: true,
-
-    )
+    GenericTrigger causeString: 'Generic Cause', genericVariables: [[defaultValue: '', key: 'release', regexpFilter: '', value: '$.release.prerelease']], regexpFilterExpression: '', regexpFilterText: '', token: '', tokenCredentialId: ''
   }
   stages {/*
     stage("Build application image") {
@@ -100,12 +92,7 @@ pipeline {
     stage("abc") {
       steps {
         script {
-          if($prerelease == true)  {
-            echo "true" 
-          }
-          else if($prerelease == false) {
-            echo "false" 
-          }
+          echo $release
         }
       }
     }
