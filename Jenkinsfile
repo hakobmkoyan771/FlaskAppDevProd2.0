@@ -1,6 +1,5 @@
 pipeline {
   agent any
-  
   environment {
     DEBUG = ''
     DOCKERHUB_CREDENTIALS = credentials('docker-repo')
