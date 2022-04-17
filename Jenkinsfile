@@ -39,6 +39,7 @@ pipeline {
     stage("Run application") {
       steps {
         script {
+          echo release
           if(release == true) {
             sh "docker run -p 5050:5050 --name dev-app -e DEBUG=True ${DOCKERHUB_CREDENTIALS_USR}/flaskapp:${env.BUILD_ID}"
           }
