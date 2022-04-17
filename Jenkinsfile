@@ -47,10 +47,6 @@ pipeline {
           else if(RELEASE == "false,") {
             echo "asd" 
           }
-          else{
-            RELEASE = "asdafs"
-            echo RELEASE
-          }
           /*
           for(el in RELEASE) {
             if(el == "t") { // if RELEASE variable is true and the first char is 't'
