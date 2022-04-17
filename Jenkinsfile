@@ -48,7 +48,8 @@ pipeline {
             echo "asd" 
           }
           else{
-            echo "asdfds" 
+            RELEASE = "asdafs"
+            echo RELEASE
           }
           /*
           for(el in RELEASE) {
