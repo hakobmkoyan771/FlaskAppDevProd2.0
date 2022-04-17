@@ -67,7 +67,6 @@ pipeline {
         }
       }
       steps {
-        sh "docker pull ${DOCKERHUB_CREDENTIALS_USR}/flaskapp:latest"
         sh "docker run -e DEBUG=True --name dev-app -p 5050:5050 ${DOCKERHUB_CREDENTIALS_USR}/flaskapp:${env.BUILD_ID}"
       }
     }
@@ -78,7 +77,6 @@ pipeline {
         }
       }
       steps {
-        sh "docker pull ${DOCKERHUB_CREDENTIALS_USR}/flaskapp:latest"
         sh "docker run -e DEBUG=False --name prod-app -p 5050:5050 ${DOCKERHUB_CREDENTIALS_USR}/flaskapp:${env.BUILD_ID}"
       }
     }
