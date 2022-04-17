@@ -17,8 +17,6 @@ pipeline {
      printContributedVariables: true,
      printPostContent: true,
 
-     silentResponse: false,
-
      regexpFilterText: '$prerelease',
     )
   }
