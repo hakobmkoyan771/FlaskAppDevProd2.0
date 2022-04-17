@@ -11,7 +11,7 @@ pipeline {
   triggers {
     GenericTrigger(causeString: 'Generic Cause', 
       genericVariables: [[defaultValue: '', 
-                          key: 'prerelease', regexpFilter: '', value: '$.prerelease']], regexpFilterExpression: '', regexpFilterText: '', token: '', tokenCredentialId: '')
+                          key: 'prerelease', regexpFilter: '', value: '$.prerelease']], regexpFilterExpression: '', regexpFilterText: '$prerelease', token: '', tokenCredentialId: '')
   }
   stages {/*
     stage("Build application image") {
