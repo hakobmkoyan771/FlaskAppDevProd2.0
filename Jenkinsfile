@@ -40,10 +40,9 @@ pipeline {
           }
           catch(Exception e) {
             error("Invalid address") 
-          }
+          }/*
           for(el in RELEASE) {
-            echo el
-            /*if(el == "t") { // if RELEASE variable is true and the first char is 't'
+            if(el == "t") { // if RELEASE variable is true and the first char is 't'
               DEBUG = 'True'
               break;
             }
@@ -54,7 +53,16 @@ pipeline {
             else {
               error("Error: link is broken")
               break;
-            }*/
+            }
+          }*/
+          if(RELEASE == "true, ") {
+            echo "true" 
+          }
+          else if(RELEASE == "false, ") {
+            echo "false" 
+          }
+          else {
+            echo "asf" 
           }
         }
       }
