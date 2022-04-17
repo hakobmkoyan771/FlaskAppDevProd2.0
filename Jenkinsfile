@@ -42,7 +42,7 @@ pipeline {
           if(release == true) {
             sh "docker run -p 5050:5050 --name dev-app -e DEBUG=True ${DOCKERHUB_CREDENTIALS_USR}/flaskapp:${env.BUILD_ID}"
           }
-          else {
+          else if(release == false) {
             sh "docker run -p 5050:5050 --name prod-app -e DEBUG=False ${DOCKERHUB_CREDENTIALS_USR}/flaskapp:${env.BUILD_ID}"
           }
         }
