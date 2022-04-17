@@ -9,9 +9,18 @@ pipeline {
     timeout(unit: 'MINUTES', time: 2) 
   }
   triggers {
-    GenericTrigger(causeString: 'Generic Cause', 
-      genericVariables: [[defaultValue: '', 
-                          key: 'prerelease', regexpFilter: '', value: '$.prerelease']], regexpFilterExpression: '', regexpFilterText: '$prerelease', token: '', tokenCredentialId: '')
+    GenericTrigger(
+     genericVariables: [
+      [key: 'prerelease', value: '$.prerelease']
+     ],
+
+     printContributedVariables: true,
+     printPostContent: true,
+
+     silentResponse: false,
+
+     regexpFilterText: '$prerelease',
+    )
   }
   stages {/*
     stage("Build application image") {
