@@ -92,7 +92,7 @@ pipeline {
     stage("abc") {
       steps {
         script {
-          echo ${release}
+          echo release
         }
       }
     }
