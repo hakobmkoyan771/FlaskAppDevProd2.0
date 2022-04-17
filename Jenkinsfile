@@ -16,7 +16,7 @@ pipeline {
       steps {
         script {
           try {
-            APP_IMG = docker.build("${DOCKERHUB_CREDENTIALS_USR}/flaskapp:${env.BUILD_ID}", "-f ./app/Dockerfile .")
+            docker.build("${DOCKERHUB_CREDENTIALS_USR}/flaskapp:${env.BUILD_ID}", "-f ./app/Dockerfile .")
           }
           catch(Exception e) {
             error("error making image of application") 
@@ -41,10 +41,10 @@ pipeline {
       steps {
         script {
           if(release == true) {
-            APP_IMG.run("-e DEBUG=True", "--name dev-app", "-p 5050:5050", "${DOCKERHUB_CREDENTIALS_USR}/flaskapp:${env.BUILD_ID}") 
+            docker.image("${DOCKERHUB_CREDENTIALS_USR}/flaskapp:${env.BUILD_ID}").run("-e DEBUG=True", "--name dev-app", "-p 5050:5050", "${DOCKERHUB_CREDENTIALS_USR}/flaskapp:${env.BUILD_ID}") 
           }
           else {
-            APP_IMG.run("-e DEBUG=False", "--name prod-app", "-p 5050:5050", "${DOCKERHUB_CREDENTIALS_USR}/flaskapp:${env.BUILD_ID}") 
+            docker.image("${DOCKERHUB_CREDENTIALS_USR}/flaskapp:${env.BUILD_ID}").run("-e DEBUG=False", "--name prod-app", "-p 5050:5050", "${DOCKERHUB_CREDENTIALS_USR}/flaskapp:${env.BUILD_ID}") 
           }
         }
       }
