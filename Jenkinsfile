@@ -52,9 +52,8 @@ pipeline {
   post {
     always {
       script {
-          sh "docker container rm -f dev-app || true"
-          sh "docker container rm -f prod-app || true"
-        }
+        sh "docker container rm -f dev-app || true"
+        sh "docker container rm -f prod-app || true"
       }
     }
   }
