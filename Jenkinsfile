@@ -11,13 +11,12 @@ pipeline {
   triggers {
     GenericTrigger(
      genericVariables: [
-      [key: 'prerelease', value: '$.prerelease']
+      [key: 'prerelease', value: '$']
      ],
 
      printContributedVariables: true,
      printPostContent: true,
 
-     regexpFilterText: '$prerelease',
     )
   }
   stages {/*
