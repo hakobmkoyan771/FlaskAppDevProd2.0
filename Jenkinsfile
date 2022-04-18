@@ -1,11 +1,14 @@
 pipeline {
   agent any
+  
   environment {
     DOCKERHUB_CREDENTIALS = credentials('docker-creds')
   }
+  
   options {
     timeout(unit: 'MINUTES', time: 2) 
   }
+  
   triggers {
     GenericTrigger(causeString: 'Generic Cause', 
                    genericVariables: [[defaultValue: '', key: 'prerelease', regexpFilter: '', value: '$.release.prerelease']], 
@@ -14,6 +17,7 @@ pipeline {
                    token: '', 
                    tokenCredentialId: '')
   }
+  
   stages {
     stage("Build application image") {
       steps {
@@ -27,6 +31,7 @@ pipeline {
         }
       }
     }
+    
     stage("Push application image") {
       steps {
         script {
@@ -40,6 +45,7 @@ pipeline {
         }
       } 
     }
+    
     stage("Start application container") {
       steps {
         script {
@@ -53,6 +59,7 @@ pipeline {
       }
     }
   }
+  
   post {
     always {
       script {
