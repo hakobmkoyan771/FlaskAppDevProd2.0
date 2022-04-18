@@ -1,7 +1,7 @@
 pipeline {
   agent any
   environment {
-    DOCKERHUB_CREDENTIALS = credentials('docker-repo')
+    DOCKERHUB_CREDENTIALS = credentials('docker-creds')
   }
   options {
     timeout(unit: 'MINUTES', time: 2) 
