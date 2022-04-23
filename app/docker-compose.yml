@@ -1,7 +1,7 @@
 version: '2'
 
 services:
-  ${APP_NAME}:
+  app:
     image: ${APP_IMAGE}
     container_name: ${APP_NAME}
     ports:
