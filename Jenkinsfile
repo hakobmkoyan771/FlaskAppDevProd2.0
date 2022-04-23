@@ -11,7 +11,7 @@ pipeline {
   
   triggers {
     GenericTrigger(causeString: 'Generic Cause', 
-                   genericVariables: [[key: 'prerelease', value: '$.release.prerelease']], 
+                   genericVariables: [[key: 'prerelease', value: '$.release.prerelease']])
   }
   
   stages {
