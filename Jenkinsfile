@@ -20,7 +20,7 @@ pipeline {
       steps {
         script {
           try {
-            docker.build("${DOCKERHUB_CREDENTIALS_USR}/flaskapp:release_tag", "-f ./app/Dockerfile .")
+            docker.build("${DOCKERHUB_CREDENTIALS_USR}/flaskapp:${release_tag}", "-f ./app/Dockerfile .")
           }
           catch(Exception e) {
             error("error making image of application") 
