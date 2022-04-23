@@ -59,7 +59,7 @@ pipeline {
         echo "false" 
       }
     }
-    
+  }
   }
   
   post {
