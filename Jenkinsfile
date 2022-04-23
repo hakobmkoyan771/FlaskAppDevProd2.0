@@ -1,10 +1,6 @@
 pipeline {
   agent any
   
-  environment {
-    DEBUG = '' 
-  }
-  
   options {
     timeout(unit: 'MINUTES', time: 2) 
   }
@@ -19,7 +15,6 @@ pipeline {
     stage("Build application image") {
       steps {
         script {
-          DEBUG = prerelease
           try {
             docker.build("${DOCKERHUB_CREDENTIALS_USR}/flaskapp:${release_tag}", "-f ./app/Dockerfile .")
           }
@@ -45,7 +40,9 @@ pipeline {
     
     stage("Start Dev application container") {
       when {
-        prerelease == 'true'  
+        expression {
+          prerelease == 'true'  
+        }
       }
       steps {
         echo "true" 
@@ -54,7 +51,9 @@ pipeline {
     
     stage("Start Prod application container") {
       when {
-        prerelease == 'false'  
+        expression {
+          prerelease == 'false'  
+        }
       }
       steps {
         echo "false" 
