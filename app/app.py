@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def hello():
-    return "Hello Luto!"
+    return "Hello!"
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Pass debug variable')
