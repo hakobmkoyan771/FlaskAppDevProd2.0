@@ -6,7 +6,7 @@ pipeline {
   }
   
   triggers {
-    GenericTrigger(causeString: 'Git Api Trigger', 
+    GenericTrigger(causeString: 'Generic Trigger', 
                    genericVariables: [[key: 'prerelease', value: '$.release.prerelease'],
                                       [key: 'release_tag', value: '$.release.tag_name'],
                                       [key: 'git_username', value: '$.sender.login']])
@@ -19,25 +19,12 @@ pipeline {
           try {
             docker.build("${git_username}/flaskapp:${release_tag}", "-f ./app/Dockerfile .")
           }
-          catch(Exception e) {
+          catch(Exception err) {
             error("error making image of application") 
           }
         }
       }
     }
-    
-    /*stage("Start application container") {
-      steps {
-        script {
-          if(prerelease == 'true') {
-            sh "docker run -p 5050:5050 --name dev-app -e DEBUG=True ${DOCKERHUB_CREDENTIALS_USR}/flaskapp:${release_tag}"
-          }
-          else if(prerelease == 'false') {
-            sh "docker run -p 5050:5050 --name prod-app -e DEBUG=False ${DOCKERHUB_CREDENTIALS_USR}/flaskapp:${release_tag}"
-          }
-        }
-      }
-    }*/
     
     stage("Start Dev application container") {
       when {
@@ -61,12 +48,11 @@ pipeline {
       }
     }
   }
+  
   post {
     always {
-      script {
-        sh "docker container rm -f dev_app || true"
-        sh "docker container rm -f prod_app || true"
-      }
+      sh "docker container rm -f dev_app || true"
+      sh "docker container rm -f prod_app || true"
     }
   }
 }
