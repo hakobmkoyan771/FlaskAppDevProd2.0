@@ -11,11 +11,7 @@ pipeline {
   
   triggers {
     GenericTrigger(causeString: 'Generic Cause', 
-                   genericVariables: [[defaultValue: '', key: 'prerelease', regexpFilter: '', value: '$.release.prerelease']], 
-                   regexpFilterExpression: '', 
-                   regexpFilterText: '', 
-                   token: '', 
-                   tokenCredentialId: '')
+                   genericVariables: [[key: 'prerelease', value: '$.release.prerelease']], 
   }
   
   stages {
