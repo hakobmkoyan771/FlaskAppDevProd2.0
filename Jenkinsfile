@@ -46,7 +46,7 @@ pipeline {
         }
       }
       steps {
-        sh ""
+        sh "cd ./app; APP_IMAGE=${git_username}/flaskapp:${release_tag} APP_NAME=dev_app DEBUG_VAR=True docker-compose up"
       }
     }
     
@@ -57,7 +57,7 @@ pipeline {
         }
       }
       steps {
-        echo "false" 
+        sh "cd ./app; APP_IMAGE=${git_username}/flaskapp:${release_tag} APP_NAME=prod_app DEBUG_VAR=False docker-compose up"
       }
     }
   }
