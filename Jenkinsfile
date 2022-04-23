@@ -25,7 +25,7 @@ pipeline {
       }
     }
     
-/*    stage("Start application container") {
+    stage("Start application container") {
       steps {
         script {
           if(prerelease == 'true') {
@@ -36,7 +36,7 @@ pipeline {
           }
         }
       }
-    }*/
+    }/*
     
     stage("Start Dev application container") {
       when {
@@ -58,10 +58,8 @@ pipeline {
       steps {
         echo "false" 
       }
-    }
+    }*/
   }
-  }
-  
   post {
     always {
       script {
