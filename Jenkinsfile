@@ -10,8 +10,10 @@ pipeline {
   }
   
   triggers {
-    GenericTrigger(causeString: 'Generic Cause', 
+    GenericTrigger(causeString: 'PreRelease', 
                    genericVariables: [[key: 'prerelease', value: '$.release.prerelease']])
+    GenericTrigger(causeString: 'PreRelease', 
+                   genericVariables: [[key: 'release_tag', value: '$.release.tag_name']])
   }
   
   stages {
@@ -19,7 +21,7 @@ pipeline {
       steps {
         script {
           try {
-            docker.build("${DOCKERHUB_CREDENTIALS_USR}/flaskapp:${env.BUILD_ID}", "-f ./app/Dockerfile .")
+            docker.build("${DOCKERHUB_CREDENTIALS_USR}/flaskapp:release_tag", "-f ./app/Dockerfile .")
           }
           catch(Exception e) {
             error("error making image of application") 
