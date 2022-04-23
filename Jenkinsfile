@@ -16,8 +16,6 @@ pipeline {
     stage("Build application image") {
       steps {
         script {
-          echo git_username
-          echo release_tag
           try {
             docker.build("${git_username}/flaskapp:${release_tag}", "-f ./app/Dockerfile .")
           }
