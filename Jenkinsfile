@@ -17,6 +17,7 @@ pipeline {
       steps {
         script {
           try {
+            echo "a"
             docker.build("${git_username}/flaskapp:${release_tag}", "-f ./app/Dockerfile .")
           }
           catch(Exception err) {
